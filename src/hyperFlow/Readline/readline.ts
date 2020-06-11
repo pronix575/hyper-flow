@@ -1,10 +1,10 @@
 import { createInterface } from 'readline'
 import { ReadlineResponse } from '../types/readline.types'
-import readlineSync from 'readline-sync'
+import { question } from 'readline-sync'
 
 export type Question = (text: string) => Promise<ReadlineResponse>
 
-export const question: Question = (text = '') => {
+export const questionAsync: Question = (text = '') => {
     const readline = createInterface({
         input: process.stdin,
         output: process.stdout
@@ -17,8 +17,8 @@ export const question: Question = (text = '') => {
     })
 }
 
-export const questionAsync = question
-
 export const questionSync = (text: string = ''): string => {
-    return readlineSync.question(text) 
+    return question(text) 
 }
+
+export default { question, questionAsync, questionSync }

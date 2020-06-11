@@ -1,12 +1,12 @@
 import { IHyper } from "../types/hyper.types"
 import { HyperContext } from './HyperContext'
-import { question } from "../Readline/readline"
+import { questionAsync } from "../Readline/readline"
 import { error } from "./standartModules/errorsGenerator"
 import chalk from "chalk"
 
 export class Hyper implements IHyper {
 
-    readonly question = question
+    readonly question = questionAsync
     
     constructor (
         private contexts: Array<HyperContext> = [],
@@ -47,7 +47,7 @@ export class Hyper implements IHyper {
             ) 
         }
 
-        question(this.currentContext.permanentMarker()).then((response) => {
+        questionAsync(this.currentContext.permanentMarker()).then((response) => {
             if (response === this.stopWord) return
             if (this.currentContext?.stopWord === response) return
             
@@ -61,4 +61,8 @@ export class Hyper implements IHyper {
 export const createHyper = (): Hyper => {
     return new Hyper()
 }
+
+const exp = { Hyper, createHyper }
+
+export default exp
 

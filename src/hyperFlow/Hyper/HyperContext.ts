@@ -128,6 +128,7 @@ export class HyperContext {
         }
         
         return this
-    }
-    
+    }   
 }
+
+export default { HyperContext }

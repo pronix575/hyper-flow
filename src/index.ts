@@ -1,10 +1,8 @@
-import { Hyper, createHyper } from "./hyperFlow/Hyper/Hyper";
-import { HyperContext } from "./hyperFlow/Hyper/HyperContext";
-import { questionSync } from "./hyperFlow/Readline/readline";
+import hyper from "./hyperFlow/Hyper/Hyper";
+import hyperContext from "./hyperFlow/Hyper/HyperContext";
+import hyperReadline from "./hyperFlow/Readline/readline";
 
-export default { 
-    Hyper, 
-    createHyper, 
-    HyperContext, 
-    question: questionSync 
-}
+export const Hyper = hyper.Hyper
+export const HyperContext = hyperContext.HyperContext
+export const readline = hyperReadline
+export const question = hyperReadline.questionSync
