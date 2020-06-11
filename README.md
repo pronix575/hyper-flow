@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/version-1.0.2-g.svg)
+![Version](https://img.shields.io/badge/version-1.0.3-g.svg)
 
 ![](/screenshots/logo.png)
 # HyperFlow.js
@@ -104,6 +104,20 @@ ctx
 
 app.setCurrentContext(ctx)
 app.listen()
+```
+using Flux
+```typescript
+import { Flux } from '@pronix/hyper-flow'
+
+const stream = new Flux<Array<string>>([])
+
+stream.on('change', (data) => {
+    console.log(data)
+})
+
+setTimeout(() => {
+    stream.setData(prev => [ ...prev, 'hello world' ])
+}, 2000)
 ```
 ## for developing
 ## setup ⚙️
