@@ -1,21 +1,38 @@
-![Version](https://img.shields.io/badge/version-0.0.1-g.svg)
+![Version](https://img.shields.io/badge/version-0.1.0-g.svg)
 
 ![](/screenshots/logo.png)
 # HyperFlow.js
 ### Framework for building progressive console applications on node.js platform
 
-<!-- ## Documentation 📄
+## Getting started (JavaScript)
+```bash
+yarn add @pronix/hyper-flow
+#or
+npm i @pronix/hyper-flow
+```
+```javascript
+const { Hyper, HyperContext } = require('@pronix/hyper-flow')
+
+const app = new Hyper()
+const ctx = new HyperContext('/start')
+
+ctx.on('/', () => console.log('hello'))
+
+app.setCurrentContext(ctx)
+app.listen()
+```
+
+## Documentation 📄 (TypeScript)
 ### how it works?
 at first, you need to create application
 ```typescript
-import { HyperContext } from "./hyperFlow/Hyper/HyperContext";
+import { Hyper } from '@pronix/hyper-flow'
 
 const app = new Hyper()
 ```
 next you need to create ctx - this is the object that will process the commands, you can create more than one context and then you can change current context in runtime 
 ```typescript
-import { Hyper } from "./hyperFlow/Hyper/Hyper";
-import { HyperContext } from "./hyperFlow/Hyper/HyperContext";
+import { Hyper, HyperContext } from '@pronix/hyper-flow'
 
 const app = new Hyper()
 
@@ -58,13 +75,15 @@ app.listen()
 ```
 in runtime:
 ```bash
-s
+ctx1:\>
 
 [error] code: 1
-message: no such a command 's'
+message: no such a command ''
 
-/
+ctx1:\>/async call
+
 hello
+ctx2:\>
 ```
 permanent marker is a tool, which writes the text in comand line befor every command, it is a function, which returns string, and it let to create dynamyc marker
 ```typescript
@@ -75,15 +94,23 @@ ctx.permanentMarker = () => 'ctx1:\\> '
 ctx
     .on('', () => {})
     .on('/', (ctx) => console.log('hello'))
+    
     .on('/error', () => console.log(error('error handler', 1)))
+    
     .on('exit', () => process.exit(0))
     .on('/exit', (ctx) => ctx.run('exit'))
+
+    .default((ctx, cmd) => {
+        console.log(cmd)
+    })
 
 app.setCurrentContext(ctx)
 app.listen()
 ```
+## for developing
 ## setup ⚙️
 ```bash
+git clone http://github.com/pronix575/hyper-flow
 cd hyper-flow
 
 yarn setup
@@ -105,4 +132,4 @@ yarn dev:build
 ```
 ```bash
 yarn dev:start
-``` -->
+```
