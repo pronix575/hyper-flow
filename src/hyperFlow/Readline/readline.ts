@@ -1,5 +1,6 @@
 import { createInterface } from 'readline'
 import { ReadlineResponse } from '../types/readline.types'
+import readlineSync from 'readline-sync'
 
 export type Question = (text: string) => Promise<ReadlineResponse>
 
@@ -14,4 +15,10 @@ export const question: Question = (text = '') => {
             resolve(answer)
         })
     })
+}
+
+export const questionAsync = question
+
+export const questionSync = (text: string = ''): string => {
+    return readlineSync.question(text) 
 }

@@ -34,8 +34,18 @@ export class Hyper implements IHyper {
         return this
     }
 
+    get currentCtx() {
+        return this.currentContext
+    }
+
     listen(): void {
-        if (!this.currentContext) throw error(`${ chalk.blueBright(`you need to set current context`) }`, 'current ctx error')
+        if (!this.currentContext)  { 
+            
+            throw error(
+                `${ chalk.blueBright(`you need to set current context`) }`, 
+                'ctx error'
+            ) 
+        }
 
         question(this.currentContext.permanentMarker()).then((response) => {
             if (response === this.stopWord) return
@@ -48,4 +58,7 @@ export class Hyper implements IHyper {
     }
 }
 
-const app = new Hyper()
+export const createHyper = (): Hyper => {
+    return new Hyper()
+}
+

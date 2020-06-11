@@ -1,16 +1,18 @@
 ![Version](https://img.shields.io/badge/version-0.0.1-g.svg)
-# Hyper Flow
-## Framework for building progressive console applications on node.js platform
 
-# Documentation
-## how it works?
+![](/screenshots/logo.png)
+# HyperFlow.js
+### Framework for building progressive console applications on node.js platform
+
+<!-- ## Documentation 📄
+### how it works?
 at first, you need to create application
 ```typescript
 import { HyperContext } from "./hyperFlow/Hyper/HyperContext";
 
 const app = new Hyper()
 ```
-next you need to create ctx - it is a system, which will work with your commands, you can create more than one context and then you can change current context in runtime 
+next you need to create ctx - this is the object that will process the commands, you can create more than one context and then you can change current context in runtime 
 ```typescript
 import { Hyper } from "./hyperFlow/Hyper/Hyper";
 import { HyperContext } from "./hyperFlow/Hyper/HyperContext";
@@ -24,6 +26,7 @@ ctx.on('/', (ctx) => {
 })
 
 app.addContext(ctx)
+app.setCurrentContext(ctx)
 
 app.listen()
 ```
@@ -33,7 +36,7 @@ const ctx = new HyperContext('start')
 const ctx2 = new HyperContext('end')
 
 
-ctx.on('/', (ctx) => {
+ctx.on('/', () => {
     console.log('hello')
     app.setCurrentContext(ctx2)
 })
@@ -102,4 +105,4 @@ yarn dev:build
 ```
 ```bash
 yarn dev:start
-```
+``` -->
