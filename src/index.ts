@@ -2,28 +2,19 @@ import { Hyper } from "./hyperFlow/Hyper/Hyper";
 import { HyperContext } from "./hyperFlow/Hyper/HyperContext";
 
 const app = new Hyper()
-
 const ctx = new HyperContext('start')
-const ctx2 = new HyperContext('end')
 
+import { error } from "./hyperFlow/Hyper/standartModules/errorsGenerator";
 
-ctx.on('/', (ctx) => {
-    console.log('hello')
-    app.setCurrentContext(ctx2)
-})
+ctx.permanentMarker = () => 'ctx1:\\> '
 
-ctx.permanentMarker = () => 'ctx1:\\>'
+ctx
+    .on('', () => {})
+    .on('/', (ctx) => console.log('hello'))
+    .on('/error', () => console.log(error('error handler', 1)))
+    .on('exit', () => process.exit(0))
+    .on('/exit', (ctx) => ctx.run('exit'))
 
-ctx2.on('/', () => console.log('end'))
-
-ctx2.permanentMarker = () => 'ctx2:\\>'
-
-app.addContext(ctx)
 app.setCurrentContext(ctx)
-
-setTimeout(() => {
-    console.log('async call')
-}, 3000)
-
 app.listen()
 
