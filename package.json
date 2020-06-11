@@ -1,8 +1,8 @@
 {
-  "name": "hyper-flow",
-  "version": "0.0.1",
+  "name": "@pronix/hyper-flow",
+  "version": "0.0.3",
   "main": "dist/index.js",
-  "author": "pronix",
+  "author": "pronix <pronix432@gmail.com>",
   "license": "MIT",
   "scripts": {
     "setup": "yarn install",
@@ -22,6 +22,19 @@
     "chalk": "^4.1.0",
     "readline-sync": "^1.4.10"
   },
-  "description": "Framework for building progressive console applications",
-  "private": true
+  "description": "Framework for building progressive console applications on node.js platform",
+  "bugs": {
+    "url": "https://github.com/pronix575/hyper-flow/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pronix575/hyper-flow.git"
+  },
+  "homepage": "https://github.com/pronix575/hyper-flow#readme",
+  "keywords": [
+    "typescript",
+    "framework",
+    "nodejs",
+    "console-application"
+  ]
 }
