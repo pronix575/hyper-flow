@@ -1,7 +1,7 @@
 {
   "name": "@pronix/hyper-flow",
-  "version": "0.0.6",
-  "main": "src/index.ts",
+  "version": "0.0.7",
+  "main": "src/index.js",
   "author": "pronix <pronix432@gmail.com>",
   "license": "MIT",
   "scripts": {
