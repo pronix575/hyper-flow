@@ -1,6 +1,6 @@
 {
   "name": "@pronix/hyper-flow",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "dist/index.js",
   "author": "pronix <pronix432@gmail.com>",
   "license": "MIT",
