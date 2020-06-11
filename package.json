@@ -1,0 +1,22 @@
+{
+  "name": "hyper-flow",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "pronix",
+  "license": "MIT",
+  "scripts": {
+    "setup": "yarn install",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev:build": "tsc --watch",
+    "dev:start": "nodemon dist/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.13",
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0"
+  },
+  "private": true
+}
