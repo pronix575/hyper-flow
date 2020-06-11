@@ -1,12 +1,12 @@
 {
   "name": "@pronix/hyper-flow",
-  "version": "0.0.13",
-  "main": "src/index.ts",
+  "version": "0.0.14",
+  "main": "dist/index.js",
   "author": "pronix <pronix432@gmail.com>",
   "license": "MIT",
   "scripts": {
     "setup": "yarn install",
-    "build": "tsc",
+    "build": "tsc src/index.ts --declaration --module commonjs --target es6 --esModuleInterop --outDir dist",
     "start": "node dist/index.js",
     "dev:build": "tsc --watch",
     "dev:start": "nodemon dist/index.js",
