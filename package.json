@@ -1,6 +1,6 @@
 {
   "name": "@pronix/hyper-flow",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "main": "src/index.js",
   "author": "pronix <pronix432@gmail.com>",
   "license": "MIT",
@@ -13,12 +13,12 @@
     "prepublish": "yarn build"
   },
   "devDependencies": {
-    "@types/node": "^14.0.13",
-    "@types/readline-sync": "^1.4.3",
     "nodemon": "^2.0.4",
     "typescript": "^3.9.5"
   },
   "dependencies": {
+    "@types/node": "^14.0.13",
+    "@types/readline-sync": "^1.4.3",
     "chalk": "^4.1.0",
     "readline-sync": "^1.4.10"
   },
