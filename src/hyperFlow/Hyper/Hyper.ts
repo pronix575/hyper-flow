@@ -15,7 +15,18 @@ export class Hyper implements IHyper {
     ) {}
 
     addContext(context: HyperContext): Hyper {
-        this.contexts.push(context)
+        
+        const ctx = this.contexts.find(c => c === context)
+        
+        if (!ctx) this.contexts.push(context)
+ 
+        return this
+    }
+
+    removeContext(context: HyperContext): Hyper {
+
+        this.contexts = this.contexts.filter(c => c !== context)
+
         return this
     }
 

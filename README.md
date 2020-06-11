@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/version-0.1.0-g.svg)
+![Version](https://img.shields.io/badge/version-0.1.4-g.svg)
 
 ![](/screenshots/logo.png)
 # HyperFlow.js
