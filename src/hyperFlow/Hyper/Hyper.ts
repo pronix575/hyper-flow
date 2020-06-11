@@ -9,37 +9,11 @@ export class Hyper implements IHyper {
     readonly question = questionAsync
     
     constructor (
-        private contexts: Array<HyperContext> = [],
         private stopWord: string = 'exit',
         private currentContext?: HyperContext,
     ) {}
 
-    addContext(context: HyperContext): Hyper {
-        
-        const ctx = this.contexts.find(c => c === context)
-        
-        if (!ctx) this.contexts.push(context)
- 
-        return this
-    }
-
-    removeContext(context: HyperContext): Hyper {
-
-        this.contexts = this.contexts.filter(c => c !== context)
-
-        return this
-    }
-
-    setCurrentContext(context: string | HyperContext): Hyper {
-        if (typeof context === 'string') {
-            const ctx = this.contexts.find(c => c.name === context)
-            ctx && this.contexts.push(ctx)
-            return this
-        } 
-
-        // checking on unique ctx
-        const ctx = this.contexts.find(c => c === context)
-        !ctx && this.contexts.push(context)
+    setCurrentContext(context: HyperContext): Hyper {
 
         this.currentContext = context
         return this
@@ -63,7 +37,7 @@ export class Hyper implements IHyper {
             if (this.currentContext?.stopWord === response) return
             
             this.currentContext?.run(response)
-                
+              
             this.listen()
         })
     }

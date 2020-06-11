@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/version-0.1.4-g.svg)
+![Version](https://img.shields.io/badge/version-1.0.2-g.svg)
 
 ![](/screenshots/logo.png)
 # HyperFlow.js
@@ -42,7 +42,6 @@ ctx.on('/', (ctx) => {
     console.log('hello')
 })
 
-app.addContext(ctx)
 app.setCurrentContext(ctx)
 
 app.listen()
@@ -64,7 +63,6 @@ ctx2.on('/', () => console.log('end'))
 
 ctx2.permanentMarker = () => 'ctx2:\\>'
 
-app.addContext(ctx)
 app.setCurrentContext(ctx)
 
 setTimeout(() => {
