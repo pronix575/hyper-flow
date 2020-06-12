@@ -5,21 +5,12 @@ import chalk from "chalk"
 export class HyperContext {
 
     constructor (
-        private nameOfCtx: string,
         private permanentMarkerOfCtx: PermanentMarker = () => '',
         private stopWordOfCtx: string = 'exit',
         private commands: Array<ICommand> = [],
         private errorHandlerOfCtx: (cmd: string) => string = 
             (cmd) => error(`no such a command '${ chalk.blueBright(cmd) }'`, 1)
     ) {}
-
-    get name(): string {
-        return this.nameOfCtx
-    }
-
-    set name(name: string) {
-        this.name = name
-    }
 
     get permanentMarker() {
         return this.permanentMarkerOfCtx

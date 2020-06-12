@@ -11,7 +11,43 @@ export class Hyper implements IHyper {
     constructor (
         private stopWord: string = 'exit',
         private currentContext?: HyperContext,
+        private contexts: Array<HyperContext> = []
     ) {}
+
+    pushContext(context: HyperContext): Hyper {
+        this.contexts.push(context)
+
+        this.setCurrentContext(context)
+
+        return this
+    }
+
+    popContext(): Hyper {
+        this.back()
+
+        return this
+    }
+
+    back(): Hyper {
+
+        this.contexts[1] && this.contexts.pop()
+
+        if (this.contexts[0]) { 
+            
+            this.setCurrentContext(
+                    this.contexts[this.contexts.length - 1]
+            )
+        }
+
+        return this
+    }
+
+    next(context: HyperContext): Hyper {
+
+        this.pushContext(context)
+
+        return this
+    }
 
     setCurrentContext(context: HyperContext): Hyper {
 
@@ -23,8 +59,11 @@ export class Hyper implements IHyper {
         return this.currentContext
     }
 
-    listen(): void {
-        if (!this.currentContext)  { 
+    listen(): Hyper {
+
+        console.log(this.contexts)
+        
+        if (!this.currentContext) {
             
             throw error(
                 `${ chalk.blueBright(`you need to set current context`) }`, 
@@ -40,6 +79,8 @@ export class Hyper implements IHyper {
               
             this.listen()
         })
+
+        return this
     }
 }
 

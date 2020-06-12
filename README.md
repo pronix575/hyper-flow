@@ -1,10 +1,10 @@
-![Version](https://img.shields.io/badge/version-1.0.3-g.svg)
+![Version](https://img.shields.io/badge/version-1.1.0-g.svg)
 
 ![](/screenshots/logo.png)
 # HyperFlow.js
 ### Framework for building progressive console applications on node.js platform
 
-## Getting started (JavaScript)
+## Getting started
 ```bash
 yarn add @pronix/hyper-flow
 #or
@@ -12,17 +12,19 @@ npm i @pronix/hyper-flow
 ```
 ```javascript
 const { Hyper, HyperContext } = require('@pronix/hyper-flow')
+// or
+// import { Hyper, HyperContext } from '@pronix/hyper-flow''
 
 const app = new Hyper()
-const ctx = new HyperContext('/start')
+const ctx = new HyperContext()
 
 ctx.on('/', () => console.log('hello'))
 
-app.setCurrentContext(ctx)
+app.pushContext(ctx)
 app.listen()
 ```
 
-## Documentation 📄 (TypeScript)
+## Documentation 📄
 ### how it works?
 at first, you need to create application
 ```typescript
@@ -36,52 +38,53 @@ import { Hyper, HyperContext } from '@pronix/hyper-flow'
 
 const app = new Hyper()
 
-const ctx = new HyperContext('start')
+const ctx = new HyperContext()
+const ctx2 = new HyperContext()
 
-ctx.on('/', (ctx) => {
-    console.log('hello')
-})
+ctx
+    .on('/next', () => app.pushContext(ctx2))
+    .on('/back', app.back)
 
-app.setCurrentContext(ctx)
+ctx2
+    .on('/next', () => app.pushContext(ctx))
+    .on('/back', app.back)
 
+app.pushContext(ctx)
+// or app.next(ctx)
 app.listen()
 ```
 also you can use async code in your program, it will works, because the readline is async
 ```typescript
-const ctx = new HyperContext('start')
-const ctx2 = new HyperContext('end')
+const app = new Hyper()
+
+const ctx = new HyperContext()
+const ctx2 = new HyperContext()
 
 
 ctx.on('/', () => {
     console.log('hello')
-    app.setCurrentContext(ctx2)
+    app.pushContext(ctx2)
 })
 
-ctx.permanentMarker = () => 'ctx1:\\>'
+ctx2
+    .on('/', () => console.log('end'))
+    .on('/ask', () => {
+        // question must be a sync call ->
+        const response = question('what is your name?')
+        // processing response
+        console.log(response)
+    })
+    .default((ctx, cmd) => {
+        console.log(cmd)
+    })
 
-ctx2.on('/', () => console.log('end'))
-
-ctx2.permanentMarker = () => 'ctx2:\\>'
-
-app.setCurrentContext(ctx)
+app.next(ctx)
 
 setTimeout(() => {
     console.log('async call')
 }, 3000)
 
 app.listen()
-```
-in runtime:
-```bash
-ctx1:\>
-
-[error] code: 1
-message: no such a command ''
-
-ctx1:\>/async call
-
-hello
-ctx2:\>
 ```
 permanent marker is a tool, which writes the text in comand line befor every command, it is a function, which returns string, and it let to create dynamyc marker
 ```typescript
@@ -98,12 +101,9 @@ ctx
     .on('exit', () => process.exit(0))
     .on('/exit', (ctx) => ctx.run('exit'))
 
-    .default((ctx, cmd) => {
-        console.log(cmd)
-    })
-
-app.setCurrentContext(ctx)
-app.listen()
+app
+    .next(ctx)
+    .listen()
 ```
 using Flux
 ```typescript
@@ -119,6 +119,7 @@ setTimeout(() => {
     stream.setData(prev => [ ...prev, 'hello world' ])
 }, 2000)
 ```
+
 ## for developing
 ## setup ⚙️
 ```bash
