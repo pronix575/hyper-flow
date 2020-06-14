@@ -61,8 +61,6 @@ export class Hyper implements IHyper {
 
     listen(): Hyper {
 
-        console.log(this.contexts)
-        
         if (!this.currentContext) {
             
             throw error(

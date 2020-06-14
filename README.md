@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/version-1.1.0-g.svg)
+![Version](https://img.shields.io/badge/version-1.1.2-g.svg)
 
 ![](/screenshots/logo.png)
 # HyperFlow.js
@@ -34,24 +34,26 @@ const app = new Hyper()
 ```
 next you need to create ctx - this is the object that will process the commands, you can create more than one context and then you can change current context in runtime 
 ```typescript
-import { Hyper, HyperContext } from '@pronix/hyper-flow'
+import { Hyper, HyperContext, utils } from '@pronix/hyper-flow'
 
 const app = new Hyper()
 
-const ctx = new HyperContext()
-const ctx2 = new HyperContext()
+const ctx1 = new HyperContext(() => utils.renderPermanentMarker('ctx1'))
+const ctx2 = new HyperContext(() => utils.renderPermanentMarker('ctx2'))
 
-ctx
-    .on('/next', () => app.pushContext(ctx2))
-    .on('/back', app.back)
+ctx1
+    .on('', () => {})
+    .on('/next', () => app.next(ctx2))
+    .on('/back', () => app.back())
 
 ctx2
-    .on('/next', () => app.pushContext(ctx))
-    .on('/back', app.back)
+    .on('', () => {})
+    .on('/next', () => app.next(ctx1))
+    .on('/back', () => app.back())
 
-app.pushContext(ctx)
-// or app.next(ctx)
-app.listen()
+app
+    .next(ctx1)
+    .listen()
 ```
 also you can use async code in your program, it will works, because the readline is async
 ```typescript
@@ -80,6 +82,7 @@ ctx2
 
 app.next(ctx)
 
+// you can use async side-effects ->
 setTimeout(() => {
     console.log('async call')
 }, 3000)
@@ -88,18 +91,18 @@ app.listen()
 ```
 permanent marker is a tool, which writes the text in comand line befor every command, it is a function, which returns string, and it let to create dynamyc marker
 ```typescript
-import { error } from "./hyperFlow/Hyper/standartModules/errorsGenerator";
+import { error } from "@pronix/hyper-flow";
 
 ctx.permanentMarker = () => 'ctx1:\\> '
 
 ctx
     .on('', () => {})
-    .on('/', (ctx) => console.log('hello'))
+    .on('/', () => console.log('hello'))
     
     .on('/error', () => console.log(error('error handler', 1)))
     
     .on('exit', () => process.exit(0))
-    .on('/exit', (ctx) => ctx.run('exit'))
+    .on('/exit', ctx => ctx.run('exit'))
 
 app
     .next(ctx)
