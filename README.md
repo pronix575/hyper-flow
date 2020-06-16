@@ -1,14 +1,14 @@
-![Version](https://img.shields.io/badge/version-1.1.2-g.svg)
-
 ![](/screenshots/logo.png)
+
 # HyperFlow.js
+![](https://img.shields.io/github/package-json/v/pronix575/hyper-flow) ![](https://img.shields.io/npm/dt/@pronix/hyper-flow.svg)
 ### Framework for building progressive console applications on node.js platform
 
 ## Getting started
 ```bash
-yarn add @pronix/hyper-flow
+$ yarn add @pronix/hyper-flow
 #or
-npm i @pronix/hyper-flow
+$ npm i @pronix/hyper-flow
 ```
 ```javascript
 const { Hyper, HyperContext } = require('@pronix/hyper-flow')
@@ -25,7 +25,7 @@ app.listen()
 ```
 
 ## Documentation 📄
-### how it works?
+### using
 at first, you need to create application
 ```typescript
 import { Hyper } from '@pronix/hyper-flow'
@@ -126,26 +126,26 @@ setTimeout(() => {
 ## for developing
 ## setup ⚙️
 ```bash
-git clone http://github.com/pronix575/hyper-flow
-cd hyper-flow
+$ git clone http://github.com/pronix575/hyper-flow
+$ cd hyper-flow
 
-yarn setup
+$ yarn setup
 # or
-npm setup
+$ npm setup
 ```
 ## build 🛠
 ```bash
-yarn build
+$ yarn build
 ```
 ## start 🚀
 ```bash
-yarn start
+$ yarn start
 ```
 
 ## developing 🧱
 ```bash
-yarn dev:build
+$ yarn dev:build
 ```
 ```bash
-yarn dev:start
+$ yarn dev:start
 ```
