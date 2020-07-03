@@ -3,12 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.HyperContext = void 0;
 const errorsGenerator_1 = require("./standartModules/errorsGenerator");
 const chalk_1 = __importDefault(require("chalk"));
 class HyperContext {
-    constructor(permanentMarkerOfCtx = () => '', stopWordOfCtx = 'exit', commands = [], errorHandlerOfCtx = (cmd) => errorsGenerator_1.error(`no such a command '${chalk_1.default.blueBright(cmd)}'`, 1)) {
+    constructor(permanentMarkerOfCtx = () => '', commands = [], errorHandlerOfCtx = (cmd) => errorsGenerator_1.error(`no such a command '${chalk_1.default.blueBright(cmd)}'`, 1)) {
         this.permanentMarkerOfCtx = permanentMarkerOfCtx;
-        this.stopWordOfCtx = stopWordOfCtx;
         this.commands = commands;
         this.errorHandlerOfCtx = errorHandlerOfCtx;
     }
@@ -17,12 +17,6 @@ class HyperContext {
     }
     set permanentMarker(pm) {
         this.permanentMarkerOfCtx = pm;
-    }
-    get stopWord() {
-        return this.stopWordOfCtx;
-    }
-    set stopWord(sw) {
-        this.stopWordOfCtx = sw;
     }
     get cmds() {
         return this.commands;

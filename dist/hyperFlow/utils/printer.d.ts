@@ -1,5 +1,5 @@
 import { ICommand } from '../types/hyper.types';
-export declare const renderCommands: (commands: ICommand[]) => string;
+export declare const renderCommands: (commands: Array<ICommand>) => string;
 export declare const print: (str: any) => void;
 export declare const renderPermanentMarker: (name: any) => string;
 declare const _default: {

@@ -9,7 +9,7 @@ export class Hyper implements IHyper {
     readonly question = questionAsync
     
     constructor (
-        private stopWord: string = 'exit',
+        private _stopWord: string = 'exit',
         private currentContext?: HyperContext,
         private contexts: Array<HyperContext> = []
     ) {}
@@ -21,6 +21,15 @@ export class Hyper implements IHyper {
 
         return this
     }
+
+    get stopWord() {
+        return this._stopWord
+    }
+
+    set stopWord(sw: string) {
+        this._stopWord = sw
+    }
+
 
     popContext(): Hyper {
         this.back()
@@ -71,7 +80,6 @@ export class Hyper implements IHyper {
 
         questionAsync(this.currentContext.permanentMarker()).then((response) => {
             if (response === this.stopWord) return
-            if (this.currentContext?.stopWord === response) return
             
             this.currentContext?.run(response)
               

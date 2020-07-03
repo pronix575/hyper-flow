@@ -108,19 +108,16 @@ app
     .next(ctx)
     .listen()
 ```
-using Flux
+stop word:
 ```typescript
-import { Flux } from '@pronix/hyper-flow'
+ctx
+    .on('/', () => console.log('hello world'))
 
-const stream = new Flux<Array<string>>([])
+app.next(ctx)
 
-stream.on('change', (data) => {
-    console.log(data)
-})
+app.stopWord = 'stop'
 
-setTimeout(() => {
-    stream.setData(prev => [ ...prev, 'hello world' ])
-}, 2000)
+app.listen()
 ```
 
 ## for developing

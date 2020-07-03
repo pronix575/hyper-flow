@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.questionSync = exports.questionAsync = void 0;
 const readline_1 = require("readline");
 const readline_sync_1 = require("readline-sync");
 exports.questionAsync = (text = '') => {

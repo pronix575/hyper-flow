@@ -6,7 +6,6 @@ export class HyperContext {
 
     constructor (
         private permanentMarkerOfCtx: PermanentMarker = () => '',
-        private stopWordOfCtx: string = 'exit',
         private commands: Array<ICommand> = [],
         private errorHandlerOfCtx: (cmd: string) => string = 
             (cmd) => error(`no such a command '${ chalk.blueBright(cmd) }'`, 1)
@@ -19,15 +18,7 @@ export class HyperContext {
     set permanentMarker(pm: PermanentMarker) {
         this.permanentMarkerOfCtx = pm
     }
-
-    get stopWord() {
-        return this.stopWordOfCtx
-    }
-
-    set stopWord(sw: string) {
-        this.stopWordOfCtx = sw
-    }
-
+    
     get cmds() {
         return this.commands
     }
@@ -44,7 +35,7 @@ export class HyperContext {
         this.errorHandlerOfCtx = eh
     }
         
-    addCommand(command: ICommand): HyperContext {
+    private addCommand(command: ICommand): HyperContext {
 
         const cmd = this.commands.find(cmd => cmd.cmd === command.cmd)
 

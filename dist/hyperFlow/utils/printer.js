@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.renderPermanentMarker = exports.print = exports.renderCommands = void 0;
 const chalk_1 = __importDefault(require("chalk"));
 exports.renderCommands = (commands) => `
 ${chalk_1.default.bold.greenBright `available commands:`} ${chalk_1.default.yellowBright.italic(commands.map(c => c.cmd).join(' '))}
