@@ -7,6 +7,6 @@ ${ chalk.bold.greenBright`available commands:` } ${ chalk.yellowBright.italic(co
     `
 
 export const print = (str: any) => console.log(str)
-export const renderPermanentMarker = (name: any) => `${ chalk.yellowBright.bold.italic`${ chalk.blueBright(name) }$ ` }`
+export const marker = (name: string | number) => `${ chalk.yellowBright.bold.italic`${ chalk.blueBright(name) }$ ` }`
 
-export default { renderCommands, print, renderPermanentMarker }
+export default { renderCommands, print, marker }

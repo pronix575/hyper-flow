@@ -9,5 +9,5 @@ export interface IHyper {
     
 }
 
-export type PermanentMarker = () => string
+export type Marker = string
 export type CommandResolve = (ctx: HyperContext, cmd?: string) => void

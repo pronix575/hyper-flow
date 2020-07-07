@@ -1,11 +1,11 @@
-import { PermanentMarker, ICommand, CommandResolve } from "../types/hyper.types";
+import { Marker, ICommand, CommandResolve } from "../types/hyper.types";
 export declare class HyperContext {
     private permanentMarkerOfCtx;
     private commands;
     private errorHandlerOfCtx;
-    constructor(permanentMarkerOfCtx?: PermanentMarker, commands?: Array<ICommand>, errorHandlerOfCtx?: (cmd: string) => string);
-    get permanentMarker(): PermanentMarker;
-    set permanentMarker(pm: PermanentMarker);
+    constructor(permanentMarkerOfCtx?: Marker, commands?: Array<ICommand>, errorHandlerOfCtx?: (cmd: string) => string);
+    get permanentMarker(): Marker;
+    set permanentMarker(pm: Marker);
     get cmds(): Array<ICommand>;
     set cmds(commands: Array<ICommand>);
     get errorHandler(): (cmd: string) => string;

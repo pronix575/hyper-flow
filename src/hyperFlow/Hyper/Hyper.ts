@@ -6,7 +6,7 @@ import chalk from "chalk"
 
 export class Hyper implements IHyper {
 
-    readonly question = questionAsync
+    static question = questionAsync
     
     constructor (
         private _stopWord: string = 'exit',
@@ -14,39 +14,20 @@ export class Hyper implements IHyper {
         private contexts: Array<HyperContext> = []
     ) {}
 
-    pushContext(context: HyperContext): Hyper {
-        this.contexts.push(context)
-
-        this.setCurrentContext(context)
-
-        return this
-    }
-
+    
     get stopWord() {
         return this._stopWord
     }
-
+    
     set stopWord(sw: string) {
         this._stopWord = sw
     }
+    
+    private pushContext(context: HyperContext): Hyper {
 
+        this.contexts.push(context)
 
-    popContext(): Hyper {
-        this.back()
-
-        return this
-    }
-
-    back(): Hyper {
-
-        this.contexts[1] && this.contexts.pop()
-
-        if (this.contexts[0]) { 
-            
-            this.setCurrentContext(
-                    this.contexts[this.contexts.length - 1]
-            )
-        }
+        this.setCurrentContext(context)
 
         return this
     }
@@ -58,9 +39,31 @@ export class Hyper implements IHyper {
         return this
     }
 
-    setCurrentContext(context: HyperContext): Hyper {
+    back(): Hyper {
+        
+        this.contexts[1] && this.contexts.pop()
+        
+        if (this.contexts[0]) { 
+            
+        this.setCurrentContext(
+            this.contexts[this.contexts.length - 1]
+            )
+        }
+        
+        return this
+    }
+        
+    clearContexts(): Hyper {
+
+        this.contexts = []
+
+        return this
+    }
+
+    private setCurrentContext(context: HyperContext): Hyper {
 
         this.currentContext = context
+
         return this
     }
 
@@ -78,13 +81,15 @@ export class Hyper implements IHyper {
             ) 
         }
 
-        questionAsync(this.currentContext.permanentMarker()).then((response) => {
-            if (response === this.stopWord) return
-            
-            this.currentContext?.run(response)
-              
-            this.listen()
-        })
+        questionAsync(this.currentContext.permanentMarker)
+        
+            .then((response) => {
+                if (response === this.stopWord) return
+                
+                this.currentContext?.run(response)
+                
+                this.listen()
+            })
 
         return this
     }
@@ -94,7 +99,5 @@ export const createHyper = (): Hyper => {
     return new Hyper()
 }
 
-const exp = { Hyper, createHyper }
-
-export default exp
+export default { Hyper, createHyper }
 

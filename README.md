@@ -38,8 +38,8 @@ import { Hyper, HyperContext, utils } from '@pronix/hyper-flow'
 
 const app = new Hyper()
 
-const ctx1 = new HyperContext(() => utils.renderPermanentMarker('ctx1'))
-const ctx2 = new HyperContext(() => utils.renderPermanentMarker('ctx2'))
+const ctx1 = new HyperContext(utils.marker('ctx1'))
+const ctx2 = new HyperContext(utils.marker('ctx2'))
 
 ctx1
     .on('', () => {})
@@ -65,7 +65,7 @@ const ctx2 = new HyperContext()
 
 ctx.on('/', () => {
     console.log('hello')
-    app.pushContext(ctx2)
+    app.next(ctx2)
 })
 
 ctx2
@@ -89,11 +89,11 @@ setTimeout(() => {
 
 app.listen()
 ```
-permanent marker is a tool, which writes the text in comand line befor every command, it is a function, which returns string, and it let to create dynamyc marker
+marker is a tool, which writes the text in comand line befor every command, it is a string
 ```typescript
 import { error } from "@pronix/hyper-flow";
 
-ctx.permanentMarker = () => 'ctx1:\\> '
+ctx.marker = 'ctx1:\\> '
 
 ctx
     .on('', () => {})

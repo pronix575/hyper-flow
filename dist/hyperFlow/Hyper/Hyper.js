@@ -12,12 +12,6 @@ class Hyper {
         this._stopWord = _stopWord;
         this.currentContext = currentContext;
         this.contexts = contexts;
-        this.question = readline_1.questionAsync;
-    }
-    pushContext(context) {
-        this.contexts.push(context);
-        this.setCurrentContext(context);
-        return this;
     }
     get stopWord() {
         return this._stopWord;
@@ -25,8 +19,13 @@ class Hyper {
     set stopWord(sw) {
         this._stopWord = sw;
     }
-    popContext() {
-        this.back();
+    pushContext(context) {
+        this.contexts.push(context);
+        this.setCurrentContext(context);
+        return this;
+    }
+    next(context) {
+        this.pushContext(context);
         return this;
     }
     back() {
@@ -36,8 +35,8 @@ class Hyper {
         }
         return this;
     }
-    next(context) {
-        this.pushContext(context);
+    clearContexts() {
+        this.contexts = [];
         return this;
     }
     setCurrentContext(context) {
@@ -51,7 +50,8 @@ class Hyper {
         if (!this.currentContext) {
             throw errorsGenerator_1.error(`${chalk_1.default.blueBright(`you need to set current context`)}`, 'ctx error');
         }
-        readline_1.questionAsync(this.currentContext.permanentMarker()).then((response) => {
+        readline_1.questionAsync(this.currentContext.permanentMarker)
+            .then((response) => {
             var _a;
             if (response === this.stopWord)
                 return;
@@ -62,8 +62,8 @@ class Hyper {
     }
 }
 exports.Hyper = Hyper;
+Hyper.question = readline_1.questionAsync;
 exports.createHyper = () => {
     return new Hyper();
 };
-const exp = { Hyper, createHyper: exports.createHyper };
-exports.default = exp;
+exports.default = { Hyper, createHyper: exports.createHyper };

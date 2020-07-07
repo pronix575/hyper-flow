@@ -10,5 +10,5 @@ export declare const readline: {
 export declare const utils: {
     renderCommands: (commands: import("./hyperFlow/types/hyper.types").ICommand[]) => string;
     print: (str: any) => void;
-    renderPermanentMarker: (name: any) => string;
+    marker: (name: string | number) => string;
 };

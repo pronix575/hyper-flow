@@ -1,11 +1,11 @@
-import { PermanentMarker, ICommand, CommandResolve } from "../types/hyper.types"
+import { Marker, ICommand, CommandResolve } from "../types/hyper.types"
 import { error } from "./standartModules/errorsGenerator"
 import chalk from "chalk"
 
 export class HyperContext {
 
     constructor (
-        private permanentMarkerOfCtx: PermanentMarker = () => '',
+        private permanentMarkerOfCtx: Marker = '',
         private commands: Array<ICommand> = [],
         private errorHandlerOfCtx: (cmd: string) => string = 
             (cmd) => error(`no such a command '${ chalk.blueBright(cmd) }'`, 1)
@@ -15,7 +15,7 @@ export class HyperContext {
         return this.permanentMarkerOfCtx
     }
 
-    set permanentMarker(pm: PermanentMarker) {
+    set permanentMarker(pm: Marker) {
         this.permanentMarkerOfCtx = pm
     }
     
@@ -101,11 +101,11 @@ export class HyperContext {
                         .commands
                         .find(command => command.cmd === 'default')
                 
-                    newCommand?.resolve(this, cmd)
+                newCommand?.resolve(this, cmd)
 
-                    !newCommand && console.log(
-                        this.errorHandlerOfCtx(cmd)
-                    )
+                !newCommand && console.log(
+                    this.errorHandlerOfCtx(cmd)
+                )
             }    
         }
         
@@ -114,3 +114,7 @@ export class HyperContext {
 }
 
 export default { HyperContext }
+
+// Neuro Oriented Events Flow
+// N O E F
+

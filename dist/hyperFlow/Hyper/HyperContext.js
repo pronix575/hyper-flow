@@ -7,7 +7,7 @@ exports.HyperContext = void 0;
 const errorsGenerator_1 = require("./standartModules/errorsGenerator");
 const chalk_1 = __importDefault(require("chalk"));
 class HyperContext {
-    constructor(permanentMarkerOfCtx = () => '', commands = [], errorHandlerOfCtx = (cmd) => errorsGenerator_1.error(`no such a command '${chalk_1.default.blueBright(cmd)}'`, 1)) {
+    constructor(permanentMarkerOfCtx = '', commands = [], errorHandlerOfCtx = (cmd) => errorsGenerator_1.error(`no such a command '${chalk_1.default.blueBright(cmd)}'`, 1)) {
         this.permanentMarkerOfCtx = permanentMarkerOfCtx;
         this.commands = commands;
         this.errorHandlerOfCtx = errorHandlerOfCtx;
@@ -82,3 +82,5 @@ class HyperContext {
 }
 exports.HyperContext = HyperContext;
 exports.default = { HyperContext };
+// Neuro Oriented Events Flow
+// N O E F

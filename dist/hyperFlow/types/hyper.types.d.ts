@@ -5,5 +5,5 @@ export interface ICommand {
 }
 export interface IHyper {
 }
-export declare type PermanentMarker = () => string;
+export declare type Marker = string;
 export declare type CommandResolve = (ctx: HyperContext, cmd?: string) => void;
