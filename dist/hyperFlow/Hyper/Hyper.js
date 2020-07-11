@@ -5,13 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createHyper = exports.Hyper = void 0;
 const readline_1 = require("../Readline/readline");
-const errorsGenerator_1 = require("./standartModules/errorsGenerator");
+const errorsGenerator_1 = require("../utils/errorsGenerator");
 const chalk_1 = __importDefault(require("chalk"));
 class Hyper {
-    constructor(_stopWord = 'exit', currentContext, contexts = []) {
+    constructor(_stopWord = 'exit', _contexts = []) {
         this._stopWord = _stopWord;
-        this.currentContext = currentContext;
-        this.contexts = contexts;
+        this._contexts = _contexts;
+    }
+    get contexts() {
+        return this._contexts;
     }
     get stopWord() {
         return this._stopWord;
@@ -19,43 +21,32 @@ class Hyper {
     set stopWord(sw) {
         this._stopWord = sw;
     }
-    pushContext(context) {
-        this.contexts.push(context);
-        this.setCurrentContext(context);
-        return this;
-    }
     next(context) {
-        this.pushContext(context);
+        this._contexts = [...this._contexts, context];
         return this;
     }
     back() {
-        this.contexts[1] && this.contexts.pop();
-        if (this.contexts[0]) {
-            this.setCurrentContext(this.contexts[this.contexts.length - 1]);
-        }
+        var _a, _b;
+        if (((_a = this._contexts) === null || _a === void 0 ? void 0 : _a.length) > 1)
+            (_b = this._contexts) === null || _b === void 0 ? void 0 : _b.pop();
         return this;
     }
     clearContexts() {
-        this.contexts = [];
+        this._contexts = [];
         return this;
     }
-    setCurrentContext(context) {
-        this.currentContext = context;
-        return this;
-    }
-    get currentCtx() {
-        return this.currentContext;
+    context() {
+        return this.contexts[this.contexts.length - 1];
     }
     listen() {
-        if (!this.currentContext) {
+        if (!this.context()) {
             throw errorsGenerator_1.error(`${chalk_1.default.blueBright(`you need to set current context`)}`, 'ctx error');
         }
-        readline_1.questionAsync(this.currentContext.marker)
-            .then((response) => {
-            var _a;
+        readline_1.questionAsync(this.context().marker)
+            .then(response => {
             if (response === this.stopWord)
                 return;
-            (_a = this.currentContext) === null || _a === void 0 ? void 0 : _a.run(response);
+            this.context().run(response);
             this.listen();
         });
         return this;

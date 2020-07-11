@@ -42,14 +42,14 @@ const ctx1 = new HyperContext(utils.marker('ctx1'))
 const ctx2 = new HyperContext(utils.marker('ctx2'))
 
 ctx1
-    .on('', () => {})
     .on('/next', () => app.next(ctx2))
     .on('/back', () => app.back())
+    .on('/', () => console.log(utils.renderCommands(ctx1.cmds)))
 
 ctx2
-    .on('', () => {})
     .on('/next', () => app.next(ctx1))
     .on('/back', () => app.back())
+    .nothing('', ' ')
 
 app
     .next(ctx1)

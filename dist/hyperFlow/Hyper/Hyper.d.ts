@@ -2,18 +2,16 @@ import { IHyper } from "../types/hyper.types";
 import { HyperContext } from './HyperContext';
 export declare class Hyper implements IHyper {
     private _stopWord;
-    private currentContext?;
-    private contexts;
+    private _contexts;
     static question: import("../Readline/readline").Question;
-    constructor(_stopWord?: string, currentContext?: HyperContext, contexts?: Array<HyperContext>);
+    constructor(_stopWord?: string, _contexts?: Array<HyperContext>);
+    get contexts(): HyperContext[];
     get stopWord(): string;
     set stopWord(sw: string);
-    private pushContext;
     next(context: HyperContext): Hyper;
     back(): Hyper;
     clearContexts(): Hyper;
-    private setCurrentContext;
-    get currentCtx(): HyperContext;
+    private context;
     listen(): Hyper;
 }
 export declare const createHyper: () => Hyper;

@@ -1,5 +1,5 @@
 import { Marker, ICommand, CommandResolve } from "../types/hyper.types"
-import { error } from "./standartModules/errorsGenerator"
+import { error } from "../utils/errorsGenerator"
 import chalk from "chalk"
 
 export class HyperContext {
@@ -7,8 +7,9 @@ export class HyperContext {
     constructor (
         private _marker: Marker = '',
         private commands: Array<ICommand> = [],
-        private errorHandlerOfCtx: (cmd: string) => string = 
-            (cmd) => error(`no such a command '${ chalk.blueBright(cmd) }'`, 1)
+        private _errorHandler: (cmd: string) => string = 
+            (cmd) => error(`no such a command '${ chalk.blueBright(cmd) }'`, 1),
+        private _nothingList: Array<string> = []
     ) {}
 
     get marker() {
@@ -28,11 +29,19 @@ export class HyperContext {
     }
 
     get errorHandler() {
-        return this.errorHandlerOfCtx
+        return this._errorHandler
     }
 
     set errorHandler(eh: (cmd: string) => string) {
-        this.errorHandlerOfCtx = eh
+        this.errorHandler = eh
+    }
+
+    get nothingList() {
+        return this._nothingList
+    }
+
+    set nothingList(strings: Array<string>) {
+        this._nothingList = strings
     }
         
     private addCommand(command: ICommand): HyperContext {
@@ -96,6 +105,9 @@ export class HyperContext {
             command?.resolve(this)
 
             if (!command) {
+                const nothingListMatch = this.nothingList.find(str => str === cmd)
+                if (nothingListMatch || nothingListMatch === '') return this
+
                 const newCommand = 
                     this
                         .commands
@@ -104,13 +116,20 @@ export class HyperContext {
                 newCommand?.resolve(this, cmd)
 
                 !newCommand && console.log(
-                    this.errorHandlerOfCtx(cmd)
+                    this.errorHandler(cmd)
                 )
             }    
         }
         
         return this
     }   
+
+    public nothing(...strings: Array<string>) {
+        
+        this._nothingList = [ ...this._nothingList, ...strings ]
+        
+        return this
+    }
 }
 
 export default { HyperContext }

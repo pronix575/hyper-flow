@@ -7,7 +7,7 @@ exports.utils = exports.readline = exports.error = exports.question = exports.Hy
 const Hyper_1 = __importDefault(require("./hyperFlow/Hyper/Hyper"));
 const HyperContext_1 = __importDefault(require("./hyperFlow/Hyper/HyperContext"));
 const readline_1 = __importDefault(require("./hyperFlow/Readline/readline"));
-const errorsGenerator_1 = __importDefault(require("./hyperFlow/Hyper/standartModules/errorsGenerator"));
+const errorsGenerator_1 = __importDefault(require("./hyperFlow/utils/errorsGenerator"));
 const printer_1 = __importDefault(require("./hyperFlow/utils/printer"));
 exports.Hyper = Hyper_1.default.Hyper;
 exports.HyperContext = HyperContext_1.default.HyperContext;

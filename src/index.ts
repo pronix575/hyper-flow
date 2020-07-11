@@ -1,7 +1,7 @@
 import hyper from "./hyperFlow/Hyper/Hyper";
 import hyperContext from "./hyperFlow/Hyper/HyperContext";
 import hyperReadline from "./hyperFlow/Readline/readline";
-import hyperErrors from './hyperFlow/Hyper/standartModules/errorsGenerator'
+import hyperErrors from './hyperFlow/utils/errorsGenerator'
 import hyperUtils from './hyperFlow/utils/printer'
 
 export const Hyper = hyper.Hyper

@@ -1,7 +1,7 @@
 import { IHyper } from "../types/hyper.types"
 import { HyperContext } from './HyperContext'
 import { questionAsync } from "../Readline/readline"
-import { error } from "./standartModules/errorsGenerator"
+import { error } from "../utils/errorsGenerator"
 import chalk from "chalk"
 
 export class Hyper implements IHyper {
@@ -10,10 +10,12 @@ export class Hyper implements IHyper {
     
     constructor (
         private _stopWord: string = 'exit',
-        private currentContext?: HyperContext,
-        private contexts: Array<HyperContext> = []
+        private _contexts: Array<HyperContext> = []
     ) {}
 
+    get contexts() {
+        return this._contexts
+    }
     
     get stopWord() {
         return this._stopWord
@@ -22,58 +24,35 @@ export class Hyper implements IHyper {
     set stopWord(sw: string) {
         this._stopWord = sw
     }
-    
-    private pushContext(context: HyperContext): Hyper {
-
-        this.contexts.push(context)
-
-        this.setCurrentContext(context)
-
-        return this
-    }
 
     next(context: HyperContext): Hyper {
 
-        this.pushContext(context)
+        this._contexts = [ ...this._contexts, context]
 
         return this
     }
 
     back(): Hyper {
-        
-        this.contexts[1] && this.contexts.pop()
-        
-        if (this.contexts[0]) { 
-            
-        this.setCurrentContext(
-            this.contexts[this.contexts.length - 1]
-            )
-        }
+
+        if (this._contexts?.length > 1) this._contexts?.pop()
         
         return this
     }
         
     clearContexts(): Hyper {
 
-        this.contexts = []
+        this._contexts = []
 
         return this
     }
 
-    private setCurrentContext(context: HyperContext): Hyper {
-
-        this.currentContext = context
-
-        return this
-    }
-
-    get currentCtx() {
-        return this.currentContext
+    private context() {
+        return this.contexts[this.contexts.length - 1]
     }
 
     listen(): Hyper {
 
-        if (!this.currentContext) {
+        if (!this.context()) {
             
             throw error(
                 `${ chalk.blueBright(`you need to set current context`) }`,
@@ -81,12 +60,12 @@ export class Hyper implements IHyper {
             ) 
         }
 
-        questionAsync(this.currentContext.marker)
+        questionAsync(this.context().marker)
         
             .then(response => {
                 if (response === this.stopWord) return
                 
-                this.currentContext?.run(response)
+                this.context().run(response)
                 
                 this.listen()
             })
