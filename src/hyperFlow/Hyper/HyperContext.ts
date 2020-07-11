@@ -11,11 +11,11 @@ export class HyperContext {
             (cmd) => error(`no such a command '${ chalk.blueBright(cmd) }'`, 1)
     ) {}
 
-    get permanentMarker() {
+    get marker() {
         return this.permanentMarkerOfCtx
     }
 
-    set permanentMarker(pm: Marker) {
+    set marker(pm: Marker) {
         this.permanentMarkerOfCtx = pm
     }
     
@@ -114,7 +114,3 @@ export class HyperContext {
 }
 
 export default { HyperContext }
-
-// Neuro Oriented Events Flow
-// N O E F
-

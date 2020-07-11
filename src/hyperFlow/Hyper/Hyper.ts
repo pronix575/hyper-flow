@@ -76,14 +76,14 @@ export class Hyper implements IHyper {
         if (!this.currentContext) {
             
             throw error(
-                `${ chalk.blueBright(`you need to set current context`) }`, 
+                `${ chalk.blueBright(`you need to set current context`) }`,
                 'ctx error'
             ) 
         }
 
-        questionAsync(this.currentContext.permanentMarker)
+        questionAsync(this.currentContext.marker)
         
-            .then((response) => {
+            .then(response => {
                 if (response === this.stopWord) return
                 
                 this.currentContext?.run(response)

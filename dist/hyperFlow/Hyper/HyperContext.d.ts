@@ -4,8 +4,8 @@ export declare class HyperContext {
     private commands;
     private errorHandlerOfCtx;
     constructor(permanentMarkerOfCtx?: Marker, commands?: Array<ICommand>, errorHandlerOfCtx?: (cmd: string) => string);
-    get permanentMarker(): Marker;
-    set permanentMarker(pm: Marker);
+    get marker(): Marker;
+    set marker(pm: Marker);
     get cmds(): Array<ICommand>;
     set cmds(commands: Array<ICommand>);
     get errorHandler(): (cmd: string) => string;

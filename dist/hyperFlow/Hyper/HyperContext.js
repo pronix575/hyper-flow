@@ -12,10 +12,10 @@ class HyperContext {
         this.commands = commands;
         this.errorHandlerOfCtx = errorHandlerOfCtx;
     }
-    get permanentMarker() {
+    get marker() {
         return this.permanentMarkerOfCtx;
     }
-    set permanentMarker(pm) {
+    set marker(pm) {
         this.permanentMarkerOfCtx = pm;
     }
     get cmds() {
@@ -82,5 +82,3 @@ class HyperContext {
 }
 exports.HyperContext = HyperContext;
 exports.default = { HyperContext };
-// Neuro Oriented Events Flow
-// N O E F
