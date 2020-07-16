@@ -20,7 +20,7 @@ const ctx = new HyperContext()
 
 ctx.on('/', () => console.log('hello'))
 
-app.pushContext(ctx)
+app.next(ctx)
 app.listen()
 ```
 
@@ -96,13 +96,17 @@ import { error } from "@pronix/hyper-flow";
 ctx.marker = 'ctx1:\\> '
 
 ctx
-    .on('', () => {})
     .on('/', () => console.log('hello'))
     
     .on('/error', () => console.log(error('error handler', 1)))
     
     .on('exit', () => process.exit(0))
     .on('/exit', ctx => ctx.run('exit'))
+
+app
+    .defaultContext
+    .on('/info', () => console.log('info: ...'))
+    .nothing('')
 
 app
     .next(ctx)

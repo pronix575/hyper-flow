@@ -1,12 +1,13 @@
 import { Marker, ICommand, CommandResolve } from "../types/hyper.types"
 import { error } from "../utils/errorsGenerator"
 import chalk from "chalk"
+import { Hyper } from "./Hyper"
 
 export class HyperContext {
 
     constructor (
         private _marker: Marker = '',
-        private commands: Array<ICommand> = [],
+        private _commands: Array<ICommand> = [],
         private _errorHandler: (cmd: string) => string = 
             (cmd) => error(`no such a command '${ chalk.blueBright(cmd) }'`, 1),
         private _nothingList: Array<string> = []
@@ -21,11 +22,11 @@ export class HyperContext {
     }
     
     get cmds() {
-        return this.commands
+        return this._commands
     }
 
     set cmds(commands: Array<ICommand>) {
-        this.commands = commands
+        this._commands = commands
     }
 
     get errorHandler() {
@@ -46,15 +47,13 @@ export class HyperContext {
         
     private addCommand(command: ICommand): HyperContext {
 
-        const cmd = this.commands.find(cmd => cmd.cmd === command.cmd)
+        const cmd = this._commands.find(cmd => cmd.cmd === command.cmd)
 
         if (cmd) {
 
-            this.commands = this.commands.map(cmd => {
+            this._commands = this._commands.map(cmd => {
                 
-                if (cmd.cmd === command.cmd) {
-                    cmd = command
-                }
+                if (cmd.cmd === command.cmd) cmd = command
                 
                 return cmd
             })
@@ -62,7 +61,7 @@ export class HyperContext {
             return this
         }
             
-        this.commands.push(command)
+        this._commands.push(command)
 
         return this
     }
@@ -74,18 +73,18 @@ export class HyperContext {
 
     default(resolve: CommandResolve): HyperContext {
 
-        const cmd = this.commands.find(cmd => cmd.cmd === 'default')
+        const cmd = this._commands.find(cmd => cmd.cmd === 'default')
 
         if (!cmd) {
 
             this
-                .commands
+                ._commands
                 .push({ cmd: 'default', resolve })
 
             return this
         }
 
-        this.commands = this.commands.map(cmd => {
+        this._commands = this._commands.map(cmd => {
 
             if (cmd.cmd === 'default') cmd = { ...cmd, resolve }
 
@@ -95,32 +94,43 @@ export class HyperContext {
         return this
     }
 
-    run(cmd: string): HyperContext {
+    run(cmd: string, app?: Hyper): HyperContext {
+        
         if (cmd || cmd === '') {
+            
             const command = 
                 this
-                    .commands
+                    ._commands
                     ?.find(command => command.cmd === cmd)
             
             command?.resolve(this)
 
-            if (!command) {
-                const nothingListMatch = this.nothingList.find(str => str === cmd)
-                if (nothingListMatch || nothingListMatch === '') return this
-
-                const newCommand = 
-                    this
-                        .commands
-                        .find(command => command.cmd === 'default')
+            if (command) return this
                 
-                newCommand?.resolve(this, cmd)
+            const nothingListMatch = 
+                
+                this
+                    .nothingList
+                    .find(str => str === cmd)
+            
+            if (nothingListMatch || nothingListMatch === '') return this
 
-                !newCommand && console.log(
-                    this.errorHandler(cmd)
-                )
-            }    
+            const newCommand = 
+                
+                this
+                    ._commands
+                    .find(command => command.cmd === 'default')
+            
+            newCommand?.resolve(this, cmd)
+
+            if (!newCommand) {
+
+                app && app.defaultContext.run(cmd)
+
+                !app && console.log(this.errorHandler(cmd))
+            }   
         }
-        
+         
         return this
     }   
 
@@ -133,3 +143,5 @@ export class HyperContext {
 }
 
 export default { HyperContext }
+
+const ctx = new HyperContext()

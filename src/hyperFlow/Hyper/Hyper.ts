@@ -9,9 +9,14 @@ export class Hyper implements IHyper {
     static question = questionAsync
     
     constructor (
+        private _contexts: Array<HyperContext> = [],
         private _stopWord: string = 'exit',
-        private _contexts: Array<HyperContext> = []
+        private _defaultContext: HyperContext = new HyperContext() 
     ) {}
+
+    get defaultContext() {
+        return this._defaultContext
+    }
 
     get contexts() {
         return this._contexts
@@ -65,7 +70,7 @@ export class Hyper implements IHyper {
             .then(response => {
                 if (response === this.stopWord) return
                 
-                this.context().run(response)
+                this.context().run(response, this)
                 
                 this.listen()
             })

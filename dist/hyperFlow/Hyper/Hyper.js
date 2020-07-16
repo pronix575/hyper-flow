@@ -4,13 +4,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createHyper = exports.Hyper = void 0;
+const HyperContext_1 = require("./HyperContext");
 const readline_1 = require("../Readline/readline");
 const errorsGenerator_1 = require("../utils/errorsGenerator");
 const chalk_1 = __importDefault(require("chalk"));
 class Hyper {
-    constructor(_stopWord = 'exit', _contexts = []) {
-        this._stopWord = _stopWord;
+    constructor(_contexts = [], _stopWord = 'exit', _defaultContext = new HyperContext_1.HyperContext()) {
         this._contexts = _contexts;
+        this._stopWord = _stopWord;
+        this._defaultContext = _defaultContext;
+    }
+    get defaultContext() {
+        return this._defaultContext;
     }
     get contexts() {
         return this._contexts;
@@ -46,7 +51,7 @@ class Hyper {
             .then(response => {
             if (response === this.stopWord)
                 return;
-            this.context().run(response);
+            this.context().run(response, this);
             this.listen();
         });
         return this;

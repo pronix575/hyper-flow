@@ -1,10 +1,12 @@
 import { IHyper } from "../types/hyper.types";
 import { HyperContext } from './HyperContext';
 export declare class Hyper implements IHyper {
-    private _stopWord;
     private _contexts;
+    private _stopWord;
+    private _defaultContext;
     static question: import("../Readline/readline").Question;
-    constructor(_stopWord?: string, _contexts?: Array<HyperContext>);
+    constructor(_contexts?: Array<HyperContext>, _stopWord?: string, _defaultContext?: HyperContext);
+    get defaultContext(): HyperContext;
     get contexts(): HyperContext[];
     get stopWord(): string;
     set stopWord(sw: string);
