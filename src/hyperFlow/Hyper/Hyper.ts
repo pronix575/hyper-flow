@@ -68,6 +68,7 @@ export class Hyper implements IHyper {
         questionAsync(this.context().marker)
         
             .then(response => {
+                
                 if (response === this.stopWord) return
                 
                 this.context().run(response, this)
@@ -84,4 +85,3 @@ export const createHyper = (): Hyper => {
 }
 
 export default { Hyper, createHyper }
-

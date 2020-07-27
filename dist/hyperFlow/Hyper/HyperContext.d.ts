@@ -3,9 +3,9 @@ import { Hyper } from "./Hyper";
 export declare class HyperContext {
     private _marker;
     private _commands;
-    private _errorHandler;
     private _nothingList;
-    constructor(_marker?: Marker, _commands?: Array<ICommand>, _errorHandler?: (cmd: string) => string, _nothingList?: Array<string>);
+    private _errorHandler;
+    constructor(_marker?: Marker, _commands?: Array<ICommand>, _nothingList?: Array<string>, _errorHandler?: (cmd: string) => string);
     get marker(): Marker;
     set marker(pm: Marker);
     get cmds(): Array<ICommand>;

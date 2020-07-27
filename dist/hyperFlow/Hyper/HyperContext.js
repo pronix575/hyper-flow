@@ -7,11 +7,11 @@ exports.HyperContext = void 0;
 const errorsGenerator_1 = require("../utils/errorsGenerator");
 const chalk_1 = __importDefault(require("chalk"));
 class HyperContext {
-    constructor(_marker = '', _commands = [], _errorHandler = (cmd) => errorsGenerator_1.error(`no such a command '${chalk_1.default.blueBright(cmd)}'`, 1), _nothingList = []) {
+    constructor(_marker = '', _commands = [], _nothingList = [], _errorHandler = (cmd) => errorsGenerator_1.error(`no such a command '${chalk_1.default.blueBright(cmd)}'`, 1)) {
         this._marker = _marker;
         this._commands = _commands;
-        this._errorHandler = _errorHandler;
         this._nothingList = _nothingList;
+        this._errorHandler = _errorHandler;
     }
     get marker() {
         return this._marker;

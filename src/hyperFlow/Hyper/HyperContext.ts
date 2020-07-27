@@ -8,9 +8,10 @@ export class HyperContext {
     constructor (
         private _marker: Marker = '',
         private _commands: Array<ICommand> = [],
+        private _nothingList: Array<string> = [],
         private _errorHandler: (cmd: string) => string = 
-            (cmd) => error(`no such a command '${ chalk.blueBright(cmd) }'`, 1),
-        private _nothingList: Array<string> = []
+            (cmd) => 
+            error(`no such a command '${ chalk.blueBright(cmd) }'`, 1)
     ) {}
 
     get marker() {
