@@ -1,148 +1,123 @@
-import { Marker, ICommand, CommandResolve } from "../types/hyper.types"
-import { error } from "../utils/errorsGenerator"
-import chalk from "chalk"
-import { Hyper } from "./Hyper"
+import { Marker, ICommand, CommandResolve } from "../types/hyper.types";
+import { error } from "../utils/errorsGenerator";
+import chalk from "chalk";
+import { Hyper } from "./Hyper";
 
 export class HyperContext {
+  constructor(
+    private _marker: Marker = "",
+    private _commands: Array<ICommand> = [],
+    private _nothingList: Array<string> = [],
+    private _errorHandler: (cmd: string) => string = (cmd) =>
+      error(`no such a command '${chalk.blueBright(cmd)}'`, 1)
+  ) {}
 
-    constructor (
-        private _marker: Marker = '',
-        private _commands: Array<ICommand> = [],
-        private _nothingList: Array<string> = [],
-        private _errorHandler: (cmd: string) => string = 
-            (cmd) => 
-            error(`no such a command '${ chalk.blueBright(cmd) }'`, 1)
-    ) {}
+  get marker() {
+    return this._marker;
+  }
 
-    get marker() {
-        return this._marker
+  set marker(pm: Marker) {
+    this._marker = pm;
+  }
+
+  get cmds() {
+    return this._commands;
+  }
+
+  set cmds(commands: Array<ICommand>) {
+    this._commands = commands;
+  }
+
+  get errorHandler() {
+    return this._errorHandler;
+  }
+
+  set errorHandler(eh: (cmd: string) => string) {
+    this.errorHandler = eh;
+  }
+
+  get nothingList() {
+    return this._nothingList;
+  }
+
+  set nothingList(strings: Array<string>) {
+    this._nothingList = strings;
+  }
+
+  private addCommand(command: ICommand): HyperContext {
+    const cmd = this._commands.find((cmd) => cmd.cmd === command.cmd);
+
+    if (cmd) {
+      this._commands = this._commands.map((cmd) => {
+        if (cmd.cmd === command.cmd) cmd = command;
+
+        return cmd;
+      });
+
+      return this;
     }
 
-    set marker(pm: Marker) {
-        this._marker = pm
-    }
-    
-    get cmds() {
-        return this._commands
-    }
+    this._commands.push(command);
 
-    set cmds(commands: Array<ICommand>) {
-        this._commands = commands
-    }
+    return this;
+  }
 
-    get errorHandler() {
-        return this._errorHandler
-    }
+  on(cmd: string, resolve: CommandResolve): HyperContext {
+    this.addCommand({ cmd, resolve });
+    return this;
+  }
 
-    set errorHandler(eh: (cmd: string) => string) {
-        this.errorHandler = eh
-    }
+  default(resolve: CommandResolve): HyperContext {
+    const cmd = this._commands.find((cmd) => cmd.cmd === "default");
 
-    get nothingList() {
-        return this._nothingList
+    if (!cmd) {
+      this._commands.push({ cmd: "default", resolve });
+
+      return this;
     }
 
-    set nothingList(strings: Array<string>) {
-        this._nothingList = strings
-    }
-        
-    private addCommand(command: ICommand): HyperContext {
+    this._commands = this._commands.map((cmd) => {
+      if (cmd.cmd === "default") cmd = { ...cmd, resolve };
 
-        const cmd = this._commands.find(cmd => cmd.cmd === command.cmd)
+      return cmd;
+    });
 
-        if (cmd) {
+    return this;
+  }
 
-            this._commands = this._commands.map(cmd => {
-                
-                if (cmd.cmd === command.cmd) cmd = command
-                
-                return cmd
-            })
+  run(cmd: string, app?: Hyper): HyperContext {
+    if (cmd || cmd === "") {
+      const command = this._commands?.find((command) => command.cmd === cmd);
 
-            return this
-        }
-            
-        this._commands.push(command)
+      command?.resolve(this);
 
-        return this
-    }
+      if (command) return this;
 
-    on(cmd: string, resolve: CommandResolve): HyperContext {
-        this.addCommand({ cmd, resolve })
-        return this
-    }
+      const nothingListMatch = this.nothingList.find((str) => str === cmd);
 
-    default(resolve: CommandResolve): HyperContext {
+      if (nothingListMatch || nothingListMatch === "") return this;
 
-        const cmd = this._commands.find(cmd => cmd.cmd === 'default')
+      const newCommand = this._commands.find(
+        (command) => command.cmd === "default"
+      );
 
-        if (!cmd) {
+      newCommand?.resolve(this, cmd);
 
-            this
-                ._commands
-                .push({ cmd: 'default', resolve })
+      if (!newCommand) {
+        app && app.defaultContext.run(cmd);
 
-            return this
-        }
-
-        this._commands = this._commands.map(cmd => {
-
-            if (cmd.cmd === 'default') cmd = { ...cmd, resolve }
-
-            return cmd
-        })
-
-        return this
+        !app && console.log(this.errorHandler(cmd));
+      }
     }
 
-    run(cmd: string, app?: Hyper): HyperContext {
-        
-        if (cmd || cmd === '') {
-            
-            const command = 
-                this
-                    ._commands
-                    ?.find(command => command.cmd === cmd)
-            
-            command?.resolve(this)
+    return this;
+  }
 
-            if (command) return this
-                
-            const nothingListMatch = 
-                
-                this
-                    .nothingList
-                    .find(str => str === cmd)
-            
-            if (nothingListMatch || nothingListMatch === '') return this
+  public nothing(...strings: Array<string>) {
+    this._nothingList = [...this._nothingList, ...strings];
 
-            const newCommand = 
-                
-                this
-                    ._commands
-                    .find(command => command.cmd === 'default')
-            
-            newCommand?.resolve(this, cmd)
-
-            if (!newCommand) {
-
-                app && app.defaultContext.run(cmd)
-
-                !app && console.log(this.errorHandler(cmd))
-            }   
-        }
-         
-        return this
-    }   
-
-    public nothing(...strings: Array<string>) {
-        
-        this._nothingList = [ ...this._nothingList, ...strings ]
-        
-        return this
-    }
+    return this;
+  }
 }
 
-export default { HyperContext }
-
-const ctx = new HyperContext()
+export default { HyperContext };
