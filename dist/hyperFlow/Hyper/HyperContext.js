@@ -7,7 +7,7 @@ exports.HyperContext = void 0;
 const errorsGenerator_1 = require("../utils/errorsGenerator");
 const chalk_1 = __importDefault(require("chalk"));
 class HyperContext {
-    constructor(_marker = '', _commands = [], _nothingList = [], _errorHandler = (cmd) => errorsGenerator_1.error(`no such a command '${chalk_1.default.blueBright(cmd)}'`, 1)) {
+    constructor(_marker = "", _commands = [], _nothingList = [], _errorHandler = (cmd) => errorsGenerator_1.error(`no such a command '${chalk_1.default.blueBright(cmd)}'`, 1)) {
         this._marker = _marker;
         this._commands = _commands;
         this._nothingList = _nothingList;
@@ -38,9 +38,9 @@ class HyperContext {
         this._nothingList = strings;
     }
     addCommand(command) {
-        const cmd = this._commands.find(cmd => cmd.cmd === command.cmd);
+        const cmd = this._commands.find((cmd) => cmd.cmd === command.cmd);
         if (cmd) {
-            this._commands = this._commands.map(cmd => {
+            this._commands = this._commands.map((cmd) => {
                 if (cmd.cmd === command.cmd)
                     cmd = command;
                 return cmd;
@@ -55,15 +55,13 @@ class HyperContext {
         return this;
     }
     default(resolve) {
-        const cmd = this._commands.find(cmd => cmd.cmd === 'default');
+        const cmd = this._commands.find((cmd) => cmd.cmd === "default");
         if (!cmd) {
-            this
-                ._commands
-                .push({ cmd: 'default', resolve });
+            this._commands.push({ cmd: "default", resolve });
             return this;
         }
-        this._commands = this._commands.map(cmd => {
-            if (cmd.cmd === 'default')
+        this._commands = this._commands.map((cmd) => {
+            if (cmd.cmd === "default")
                 cmd = Object.assign(Object.assign({}, cmd), { resolve });
             return cmd;
         });
@@ -71,20 +69,15 @@ class HyperContext {
     }
     run(cmd, app) {
         var _a;
-        if (cmd || cmd === '') {
-            const command = (_a = this
-                ._commands) === null || _a === void 0 ? void 0 : _a.find(command => command.cmd === cmd);
+        if (cmd || cmd === "") {
+            const command = (_a = this._commands) === null || _a === void 0 ? void 0 : _a.find((command) => command.cmd === cmd);
             command === null || command === void 0 ? void 0 : command.resolve(this);
             if (command)
                 return this;
-            const nothingListMatch = this
-                .nothingList
-                .find(str => str === cmd);
-            if (nothingListMatch || nothingListMatch === '')
+            const nothingListMatch = this.nothingList.find((str) => str === cmd);
+            if (nothingListMatch || nothingListMatch === "")
                 return this;
-            const newCommand = this
-                ._commands
-                .find(command => command.cmd === 'default');
+            const newCommand = this._commands.find((command) => command.cmd === "default");
             newCommand === null || newCommand === void 0 ? void 0 : newCommand.resolve(this, cmd);
             if (!newCommand) {
                 app && app.defaultContext.run(cmd);
@@ -100,4 +93,3 @@ class HyperContext {
 }
 exports.HyperContext = HyperContext;
 exports.default = { HyperContext };
-const ctx = new HyperContext();

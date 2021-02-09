@@ -9,7 +9,7 @@ const readline_1 = require("../Readline/readline");
 const errorsGenerator_1 = require("../utils/errorsGenerator");
 const chalk_1 = __importDefault(require("chalk"));
 class Hyper {
-    constructor(_contexts = [], _stopWord = 'exit', _defaultContext = new HyperContext_1.HyperContext()) {
+    constructor(_contexts = [], _stopWord = "exit", _defaultContext = new HyperContext_1.HyperContext()) {
         this._contexts = _contexts;
         this._stopWord = _stopWord;
         this._defaultContext = _defaultContext;
@@ -45,10 +45,9 @@ class Hyper {
     }
     listen() {
         if (!this.context()) {
-            throw errorsGenerator_1.error(`${chalk_1.default.blueBright(`you need to set current context`)}`, 'ctx error');
+            throw errorsGenerator_1.error(`${chalk_1.default.blueBright(`you need to set current context`)}`, "ctx error");
         }
-        readline_1.questionAsync(this.context().marker)
-            .then(response => {
+        readline_1.questionAsync(this.context().marker).then((response) => {
             if (response === this.stopWord)
                 return;
             this.context().run(response, this);

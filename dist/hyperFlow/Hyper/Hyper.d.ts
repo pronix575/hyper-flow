@@ -1,6 +1,5 @@
-import { IHyper } from "../types/hyper.types";
-import { HyperContext } from './HyperContext';
-export declare class Hyper implements IHyper {
+import { HyperContext } from "./HyperContext";
+export declare class Hyper {
     private _contexts;
     private _stopWord;
     private _defaultContext;
