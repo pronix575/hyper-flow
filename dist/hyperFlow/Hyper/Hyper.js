@@ -47,7 +47,7 @@ class Hyper {
         if (!this.context()) {
             throw errorsGenerator_1.error(`${chalk_1.default.blueBright(`you need to set current context`)}`, "ctx error");
         }
-        readline_1.questionAsync(this.context().marker).then((response) => {
+        readline_1.questionAsync(this.context().marker()).then((response) => {
             if (response === this.stopWord)
                 return;
             this.context().run(response, this);

@@ -5,5 +5,5 @@ export interface ICommand {
   resolve: (ctx: HyperContext, cmd?: string) => void;
 }
 
-export type Marker = string;
+export type Marker = () => string;
 export type CommandResolve = (ctx: HyperContext, cmd?: string) => void;

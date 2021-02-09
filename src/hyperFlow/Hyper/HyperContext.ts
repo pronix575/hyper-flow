@@ -2,12 +2,13 @@ import { Marker, ICommand, CommandResolve } from "../types/hyper.types";
 import { error } from "../utils/errorsGenerator";
 import chalk from "chalk";
 import { Hyper } from "./Hyper";
+import { marker } from "../utils/printer";
 
 export class HyperContext {
   constructor(
-    private _marker: Marker = "",
     private _commands: Array<ICommand> = [],
     private _nothingList: Array<string> = [],
+    private _marker: Marker = () => marker(""),
     private _errorHandler: (cmd: string) => string = (cmd) =>
       error(`no such a command '${chalk.blueBright(cmd)}'`, 1)
   ) {}

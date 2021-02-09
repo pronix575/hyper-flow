@@ -1,11 +1,11 @@
 import { Marker, ICommand, CommandResolve } from "../types/hyper.types";
 import { Hyper } from "./Hyper";
 export declare class HyperContext {
-    private _marker;
     private _commands;
     private _nothingList;
+    private _marker;
     private _errorHandler;
-    constructor(_marker?: Marker, _commands?: Array<ICommand>, _nothingList?: Array<string>, _errorHandler?: (cmd: string) => string);
+    constructor(_commands?: Array<ICommand>, _nothingList?: Array<string>, _marker?: Marker, _errorHandler?: (cmd: string) => string);
     get marker(): Marker;
     set marker(pm: Marker);
     get cmds(): Array<ICommand>;

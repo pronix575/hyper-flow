@@ -6,11 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.HyperContext = void 0;
 const errorsGenerator_1 = require("../utils/errorsGenerator");
 const chalk_1 = __importDefault(require("chalk"));
+const printer_1 = require("../utils/printer");
 class HyperContext {
-    constructor(_marker = "", _commands = [], _nothingList = [], _errorHandler = (cmd) => errorsGenerator_1.error(`no such a command '${chalk_1.default.blueBright(cmd)}'`, 1)) {
-        this._marker = _marker;
+    constructor(_commands = [], _nothingList = [], _marker = () => printer_1.marker(""), _errorHandler = (cmd) => errorsGenerator_1.error(`no such a command '${chalk_1.default.blueBright(cmd)}'`, 1)) {
         this._commands = _commands;
         this._nothingList = _nothingList;
+        this._marker = _marker;
         this._errorHandler = _errorHandler;
     }
     get marker() {

@@ -58,7 +58,7 @@ export class Hyper {
       );
     }
 
-    questionAsync(this.context().marker).then((response) => {
+    questionAsync(this.context().marker()).then((response) => {
       if (response === this.stopWord) return;
 
       this.context().run(response, this);
